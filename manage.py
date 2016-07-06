@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 from thermos import app, db
-from models import User
+from thermos.models import User
 from flask.ext.script import Manager, prompt_bool
 
 manager = Manager(app)
