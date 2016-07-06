@@ -25,6 +25,11 @@ def add():
         flash("Stored bookmak '{}'.".format(description))
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
+
+@app.route("/user/<username>")
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template("user.html", user=user)
     
 @app.errorhandler(404)
 def page_not_found(e):
