@@ -14,6 +14,10 @@ db = SQLAlchemy(app)
 from forms import BookmarkForm
 import models
 
+# TODO: Fake Login
+def logged_in_user():
+    return models.User.query.filter_by(username="gonzigonz").first()
+
 @app.route("/")
 @app.route("/index")
 def index():
@@ -25,7 +29,7 @@ def add():
     if  form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        bm = models.Bookmark(url=url, description=description)
+        bm = models.Bookmark(user=logged_in_user(), url=url, description=description)
         db.session.add(bm)
         db.session.commit()
         flash("Stored bookmak '{}'.".format(description))
@@ -42,4 +46,5 @@ def server_error(e):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
     
