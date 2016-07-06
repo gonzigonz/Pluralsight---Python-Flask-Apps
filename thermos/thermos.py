@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 
 from forms import BookmarkForm
+import models
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,22 +13,11 @@ app.config["SECRET_KEY"] = "o\xde\x87&\xf9\xc7\x00hJ*\xe5\x94\xbd\xd3\xef\x8a\xa
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "thermos.db")
 
 db = SQLAlchemy(app)
-bookmarks = []
-
-def store_bookmark(url, description):
-    bookmarks.append(dict(
-        url = url,
-        description = description,
-        user = "gonz",
-        date = datetime.utcnow()
-    ))
-def new_bookmarks(num):
-    return sorted(bookmarks, key=lambda bm: bm["date"], reverse=True)[:num]
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", new_bookmarks = new_bookmarks(5))
+    return render_template("index.html", new_bookmarks = models.Bookmark.newest(5))
         
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -35,7 +25,9 @@ def add():
     if  form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        store_bookmark(url, description)
+        bm = models.Bookmark(url=url, description=description)
+        db.session.add(bm)
+        db.session.commit()
         flash("Stored bookmak '{}'.".format(description))
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
