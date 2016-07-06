@@ -3,9 +3,6 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
-from forms import BookmarkForm
-import models
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
@@ -13,6 +10,9 @@ app.config["SECRET_KEY"] = "o\xde\x87&\xf9\xc7\x00hJ*\xe5\x94\xbd\xd3\xef\x8a\xa
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "thermos.db")
 
 db = SQLAlchemy(app)
+
+from forms import BookmarkForm
+import models
 
 @app.route("/")
 @app.route("/index")
