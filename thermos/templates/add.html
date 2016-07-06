@@ -3,15 +3,23 @@
 {% block title %}Thermos - Add{% endblock %}
 
 {% block content %}
- <form action="" method="POST">
-    <p>
-        Please enter your bookmark here:
-        <input type="text" name="url">
-    </p>
-    <p>
-        <button type="submit">Submit</button>
-    </p>
-</form>
+    <section>
+        <h1>Add a new URL</h1>
+         <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div>
+                <p>Please enter your bookmark here:</p>
+                <p>{{ form.url(size = 50) }}</p>
+            </div>
+            <div>
+                <p>Add an optional description:</p>
+                <p>{{ form.description(size = 50) }}</p>
+            </div>
+            <p>
+                <button type="submit">Submit</button>
+            </p>
+        </form>
+    </section>
 {% endblock %}
 
 {% block sidebar %}
