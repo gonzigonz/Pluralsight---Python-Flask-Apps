@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
 
 {% block title %}Thermos - Add{% endblock %}
 
@@ -7,21 +8,8 @@
         <h1>Add a new URL</h1>
          <form action="" method="POST">
             {{ form.hidden_tag() }}
-            <div>
-                <p {% if form.url.errors %} class="error" {% endif %} >Please enter your bookmark here:</p>
-                <p>{{ form.url(size = 50) }}</p>
-                <div class="error">
-                    <ul>
-                        {% for error in form.url.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div>
-                <p>Add an optional description:</p>
-                <p>{{ form.description(size = 50) }}</p>
-            </div>
+            {{ render_field(form.url, size=50) }}
+            {{ render_field(form.description, size=50) }}
             <p>
                 <button type="submit">Submit</button>
             </p>
