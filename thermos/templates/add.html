@@ -8,8 +8,15 @@
          <form action="" method="POST">
             {{ form.hidden_tag() }}
             <div>
-                <p>Please enter your bookmark here:</p>
+                <p {% if form.url.errors %} class="error" {% endif %} >Please enter your bookmark here:</p>
                 <p>{{ form.url(size = 50) }}</p>
+                <div class="error">
+                    <ul>
+                        {% for error in form.url.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
             <div>
                 <p>Add an optional description:</p>
