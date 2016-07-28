@@ -4,6 +4,7 @@ from sqlalchemy import desc
 
 from thermos import db
 
+
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.Text, nullable=False)
@@ -17,6 +18,7 @@ class Bookmark(db.Model):
 
     def __repr__(self):
         return "<Bookmark '{}': '{}'>".format(self.description, self.url)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
